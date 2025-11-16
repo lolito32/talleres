@@ -1,0 +1,31 @@
+---
+const res = await fetch("https://www.scorebat.com/video-api/v3/");
+const data = await res.json();
+
+// Filtrar solo partidos de Talleres
+const talleres = data.response.filter(p =>
+  p.title.toLowerCase().includes("talleres")
+);
+---
+
+<html>
+  <head>
+    <title>Partidos de Talleres</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <h1>Partidos de Talleres</h1>
+
+    {
+      talleres.length > 0
+        ? talleres.map(p => (
+            <div class="card">
+              <h2>{p.title}</h2>
+              <p>{p.competition}</p>
+              <a href={p.matchviewUrl} target="_blank">Ver partido</a>
+            </div>
+          ))
+        : <p>No se encontraron partidos de Talleres 😢</p>
+    }
+  </body>
+</html>
